@@ -1,0 +1,15 @@
+
+$primary: #B4F9DC;
+$secondary: #D1D5FF;
+
+.card {
+    background-color: $primary;
+    margin-top: 40px;
+}
+.btn-info {
+    background-color: $secondary;
+}
+
+.card-rounded{
+    border-radius: 5%;
+}

@@ -1,6 +1,3 @@
-.App {
-  text-align: center;
-}
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +32,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+col{
+  padding-top: 75px;
+}
+
+.overlapping-div { 
+
+  position: absolute; 
+
+  z-index: 100; /* Adjust the z-index value as needed */ 
+
+  text-align: left;
+
 }
