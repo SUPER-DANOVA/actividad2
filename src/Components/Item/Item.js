@@ -11,18 +11,18 @@ import { useSelector } from 'react-redux';
 
 function Item(props) {
 
-  const options = useSelector(state => state.options.value);
 
+  const options = useSelector(state => state.options.value);
   const dispatch = useDispatch();
 
   const deleteGoal = (e) =>{
     e.preventDefault();
-    dispatch(removeGoal({"name":props.name, "description": props.description, "dueDate": props.dueDate}));
+    dispatch(removeGoal({"name":props.name, "description": props.description, "dueDate": props.dueDate, "id": props.id}));
   }
 
   const deleteTask = (e) =>{
     e.preventDefault();
-    dispatch(removeTask({"name":props.name, "description": props.description, "dueDate": props.dueDate}));
+    dispatch(removeTask({"name":props.name, "description": props.description, "dueDate": props.dueDate, "id": props.id}));
   }
 
 
@@ -39,6 +39,9 @@ function Item(props) {
         </Card.Text>
         <Card.Text >
         {props.dueDate}
+        </Card.Text>
+        <Card.Text className='d-none'>
+        {props.id}
         </Card.Text>
         <div className="d-grid gap-2">
 

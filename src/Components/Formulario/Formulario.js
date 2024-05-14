@@ -13,8 +13,6 @@ import { useSelector } from 'react-redux';
 
 
 function Formulario() {
-
-
   const options = useSelector(state => state.options.value);
 
   const inputRefName = useRef();
@@ -44,18 +42,19 @@ function Formulario() {
 
       <Form.Group  controlId="formBasicName">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="" ref={inputRefName}/>
+        <Form.Control type="text" placeholder="" ref={inputRefName} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicDescription">
         <Form.Label>Description</Form.Label>
-        <Form.Control as="textarea" placeholder="" ref={inputRefDescription}/>
+        <Form.Control as="textarea" placeholder="" ref={inputRefDescription} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicDate">
         <Form.Label>Due Date</Form.Label>
-        <Form.Control type="date" placeholder="" ref={inputRefDueDate}/>
+        <Form.Control type="date" placeholder="" ref={inputRefDueDate} required/>
       </Form.Group>
+
       <br></br>
       <div className="d-grid gap-2 col-6 mx-auto">
 

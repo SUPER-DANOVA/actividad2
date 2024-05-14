@@ -8,6 +8,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MobileButton from './Components/MobileButton/MobileButton';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { initTask } from "./reducers/taskSlice"
+import { initGoal } from "./reducers/goalsSlice"
 
 
 function App() {
@@ -16,6 +20,48 @@ function App() {
   const tasks = useSelector((state)=>state.tasks.value);
   const options = useSelector(state => state.options.value);
 
+  const dispatch = useDispatch();
+
+  function initFetchTasks(){
+    fetch("http://localhost:3001/tasks/getTasks",{
+      method:"GET",
+      headers:{
+          "content-Type":"application/json",
+          "Authorization":"1234567"
+      }
+    }).then((response)=>{
+      return response.json();
+    }).then((response)=>{
+      response.map((task)=>{
+        dispatch((initTask(task)));
+      })
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
+
+  function initFetchGoals(){
+    fetch("http://localhost:3001/goals/getGoals",{
+      method:"GET",
+      headers:{
+          "content-Type":"application/json",
+          "Authorization":"1234567"
+      }
+    }).then((response)=>{
+      return response.json();
+    }).then((response)=>{
+      response.map((goal)=>{
+        dispatch((initGoal(goal)));
+      })
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
+
+  useEffect(()=>{
+    initFetchTasks();
+    initFetchGoals();
+  },[]);
 
   return (
     <div className="App">
@@ -29,21 +75,16 @@ function App() {
               <MobileButton className='float-left'/>
             </div>
           </Row>
-          <Row>
-            <div className='overflow-scroll'>
-              
+          <Row>    
               {options === "goals" ? (
               goals.map((goal, index)=>(
-                <Item key={index} name={goal.name} description={goal.description} dueDate={goal.dueDate}></Item>
+                <Item key={index} name={goal.name} description={goal.description} dueDate={goal.dueDate} id={goal.id}></Item>
               ))
               ): (options === "tasks" &&(tasks.map((task, index)=>(
-                <Item key={index} name={task.name} description={task.description} dueDate={task.dueDate}></Item>
+                <Item key={index} name={task.name} description={task.description} dueDate={task.dueDate} id={task.id}></Item>
               ))))
             }
 
-
-
-            </div>
           </Row>
         </Col>
       </Row>
