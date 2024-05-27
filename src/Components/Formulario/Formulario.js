@@ -8,32 +8,55 @@ import {
 import {
   addTask
 } from '../../reducers/taskSlice';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 
 function Formulario() {
+  const [error, setError] = useState('');
   const options = useSelector(state => state.options.value);
-
   const inputRefName = useRef();
   const inputRefDescription = useRef();
   const inputRefDueDate = useRef();
-
   const dispatch = useDispatch();
 
   // agrega un item a goals
 
-  const addItemGoal = (e) =>{
+  const addItemGoal = (e) => {
     e.preventDefault();
-    dispatch(addGoal({"name":inputRefName.current.value, "description": inputRefDescription.current.value, "dueDate": inputRefDueDate.current.value}));
-  }
+    const name = inputRefName.current.value.trim();
+    const description = inputRefDescription.current.value.trim();
+    const dueDate = inputRefDueDate.current.value;
+    if (!name || !description || !dueDate) {
+      setError('Porfavor llene todos los campos');
+      return;
+    }
+    dispatch(addGoal({ name, description, dueDate }));
+    setError('');
+    // limpia los campos despues de enviar los datos
+    inputRefName.current.value = '';
+    inputRefDescription.current.value = '';
+    inputRefDueDate.current.value = '';
+  };
 
     // agrega un item a tasks
 
-    const addItemTask = (e) =>{
+    const addItemTask = (e) => {
       e.preventDefault();
-      dispatch(addTask({"name":inputRefName.current.value, "description": inputRefDescription.current.value, "dueDate": inputRefDueDate.current.value}));
-    }
+      const name = inputRefName.current.value.trim();
+      const description = inputRefDescription.current.value.trim();
+      const dueDate = inputRefDueDate.current.value;
+      if (!name || !description || !dueDate) {
+        setError('Porfavor llene todos los campos');
+        return;
+      }
+      dispatch(addTask({ name, description, dueDate }));
+      setError('');
+      // limpia los campos despues de enviar los datos
+      inputRefName.current.value = '';
+      inputRefDescription.current.value = '';
+      inputRefDueDate.current.value = '';
+    };
 
 
   return (
@@ -55,6 +78,7 @@ function Formulario() {
         <Form.Control type="date" placeholder="" ref={inputRefDueDate} required/>
       </Form.Group>
 
+      {error && <p className="text-danger">{error}</p>}
       <br></br>
       <div className="d-grid gap-2 col-6 mx-auto">
 

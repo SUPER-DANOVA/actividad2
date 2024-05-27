@@ -4,7 +4,7 @@ import './MobileButton.scss'
 function MobileButton(){
     return(
         <>
-            <Button variant="info" className='btn-formulario'>ADD GOALL</Button>
+            <Button variant="info" className='btn-formulario'>ADD</Button>
         </>
     );
 
